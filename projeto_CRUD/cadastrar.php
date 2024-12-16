@@ -12,11 +12,18 @@
     if(!$mysqli->query($criarTB)){
         echo("<script>alert('Não foi possivel criar a tabela')</script>");
     }
-
-    $nome = filter_input(INPUT_POST,'nome',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $telefone = $_POST['telefone'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    if(array_key_exists('nome',$_POST)){
+        $nome = filter_input(INPUT_POST,'nome',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+    if(array_key_exists('telefone',$_POST)){
+        $telefone = filter_input(INPUT_POST,'telefone',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+    if(array_key_exists('email',$_POST)){
+        $email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
+    }
+    if(array_key_exists('senha',$_POST)){
+        $senha = filter_input(INPUT_POST,'senha',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
 
     $inserir = $mysqli -> prepare("INSERT INTO user (nome, telefone, email, senha) VALUES 
     (?,?,?,?)");
